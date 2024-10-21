@@ -11,20 +11,140 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <h2 class="text-center mb-4">National Football League</h2>
-                <table class="table table-striped table-bordered">
-                    <thead class="table-dark">
-                        <tr style="width: 100%;">
-                            <th scope="col" style="width: 75%;" class="text-center">Loser</th>
-                            <th scope="col" style="width: 100%;" class="text-center">Opponent</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let game of games">
-                            <td class="text-center">{{game.loser}} <img [src]="game.loserLogo" alt="{{game.loser}}" width="70"></td> 
-                            <td class="text-center">{{game.opponent}} <img [src]="game.opponentLogo" alt="{{game.opponent}}" width="50"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div *ngIf="nflGames.length !== 0; else noNflData">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr style="width: 100%;">
+                                <th scope="col" style="width: 75%;" class="text-center">Loser</th>
+                                <th scope="col" style="width: 100%;" class="text-center">Opponent</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr *ngFor="let game of nflGames">
+                                    <td class="text-center">{{game.loser}} <img [src]="game.loserLogo" alt="{{game.loser}}" width="70"></td> 
+                                    <td class="text-center">{{game.opponent}} <img [src]="game.opponentLogo" alt="{{game.opponent}}" width="50"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #noNflData>
+                    <div>                     
+                        <h4 class="text-center">No National Football League games have been completed today</h4>      
+                    </div>
+                </ng-template> 
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="text-center mb-4">Major League Baseball</h2>
+                <div *ngIf="mlbGames.length !== 0; else noMlbData">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr style="width: 100%;">
+                                <th scope="col" style="width: 75%;" class="text-center">Loser</th>
+                                <th scope="col" style="width: 100%;" class="text-center">Opponent</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr *ngFor="let game of mlbGames">
+                                    <td class="text-center">{{game.loser}} <img [src]="game.loserLogo" alt="{{game.loser}}" width="70"></td> 
+                                    <td class="text-center">{{game.opponent}} <img [src]="game.opponentLogo" alt="{{game.opponent}}" width="50"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #noMlbData>
+                    <div>                     
+                        <h4 class="text-center">No Major League Baseball games have been completed today</h4>      
+                    </div>
+                </ng-template> 
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="text-center mb-4">National Basketball Association</h2>
+                <div *ngIf="nbaGames.length !== 0; else noNbaData">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr style="width: 100%;">
+                                <th scope="col" style="width: 75%;" class="text-center">Loser</th>
+                                <th scope="col" style="width: 100%;" class="text-center">Opponent</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr *ngFor="let game of nbaGames">
+                                    <td class="text-center">{{game.loser}} <img [src]="game.loserLogo" alt="{{game.loser}}" width="70"></td> 
+                                    <td class="text-center">{{game.opponent}} <img [src]="game.opponentLogo" alt="{{game.opponent}}" width="50"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #noNbaData>
+                    <div>                     
+                        <h4 class="text-center">No National Basketball Association games have been completed today</h4>      
+                    </div>
+                </ng-template>  
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="text-center mb-4">NCAA Division-1 FBS Football</h2>
+                <div *ngIf="ncaaFbGames.length !== 0; else noFootballData">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr style="width: 100%;">
+                                <th scope="col" style="width: 75%;" class="text-center">Loser</th>
+                                <th scope="col" style="width: 100%;" class="text-center">Opponent</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr *ngFor="let game of ncaaFbGames">
+                                    <td class="text-center">{{game.loser}} <img [src]="game.loserLogo" alt="{{game.loser}}" width="70"></td> 
+                                    <td class="text-center">{{game.opponent}} <img [src]="game.opponentLogo" alt="{{game.opponent}}" width="50"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #noFootballData>
+                    <div>                     
+                        <h4 class="text-center">No NCAA Football games have been completed today</h4>      
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="text-center mb-4">NCAA Division-1 Men's Basketball</h2>
+                <div *ngIf="ncaaMbbGames.length !== 0; else noMbbData">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr style="width: 100%;">
+                                <th scope="col" style="width: 75%;" class="text-center">Loser</th>
+                                <th scope="col" style="width: 100%;" class="text-center">Opponent</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr *ngFor="let game of ncaaMbbGames">
+                                    <td class="text-center">{{game.loser}} <img [src]="game.loserLogo" alt="{{game.loser}}" width="70"></td> 
+                                    <td class="text-center">{{game.opponent}} <img [src]="game.opponentLogo" alt="{{game.opponent}}" width="50"></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #noMbbData>
+                    <div>                     
+                        <h4 class="text-center">No NCAA Men's Basketball games have been completed today</h4>      
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
