@@ -2,12 +2,16 @@ import { Component, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface Team {
+export interface Game {
     team:{
         displayName: string;
         logo: string;
     }
     winner: boolean;
+    links:{
+      href: string; 
+      text: string; 
+    }
   }
 
 @Injectable({

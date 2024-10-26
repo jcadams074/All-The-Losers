@@ -29,7 +29,7 @@
                 </div>
                 <ng-template #noNflData>
                     <div>                     
-                        <h4 class="text-center">No National Football League games have been completed today</h4>      
+                        <h4 class="text-center">No National Football League games have been completed recently</h4>      
                     </div>
                 </ng-template> 
             </div>
@@ -57,7 +57,7 @@
                 </div>
                 <ng-template #noMlbData>
                     <div>                     
-                        <h4 class="text-center">No Major League Baseball games have been completed today</h4>      
+                        <h4 class="text-center">No Major League Baseball games have been completed recently</h4>      
                     </div>
                 </ng-template> 
             </div>
@@ -85,7 +85,7 @@
                 </div>
                 <ng-template #noNbaData>
                     <div>                     
-                        <h4 class="text-center">No National Basketball Association games have been completed today</h4>      
+                        <h4 class="text-center">No National Basketball Association games have been completed recently</h4>      
                     </div>
                 </ng-template>  
             </div>
@@ -95,7 +95,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <h2 class="text-center mb-4">NCAA Division-1 FBS Football</h2>
-                <div *ngIf="ncaaFbGames.length !== 0; else noFootballData">
+                <div *ngIf="ncaaFbGames.length !== 0; else noNcaaFbData">
                     <table class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr style="width: 100%;">
@@ -111,9 +111,9 @@
                         </tbody>
                     </table>
                 </div>
-                <ng-template #noFootballData>
+                <ng-template #noNcaaFbData>
                     <div>                     
-                        <h4 class="text-center">No NCAA Football games have been completed today</h4>      
+                        <h4 class="text-center">No NCAA Football games have been completed recently</h4>      
                     </div>
                 </ng-template>
             </div>
@@ -142,7 +142,7 @@
                 </div>
                 <ng-template #noMbbData>
                     <div>                     
-                        <h4 class="text-center">No NCAA Men's Basketball games have been completed today</h4>      
+                        <h4 class="text-center">No NCAA Men's Basketball games have been completed recently</h4>      
                     </div>
                 </ng-template>
             </div>

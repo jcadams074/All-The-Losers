@@ -17,7 +17,7 @@ export class NcaaFootballService {
 
     constructor(private http: HttpClient) {}
  
-    private apiUrl = 'http://site.api.espn.com/apis/site/v2/sports/football/college-football/news';
+    private apiUrl = 'http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard';
 
   getGames(): Observable<any> {
     return this.http.get<any>(this.apiUrl);

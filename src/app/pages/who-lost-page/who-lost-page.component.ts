@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NflService, Team } from '../../services/nfl.service';
+import { NflService} from '../../services/nfl.service';
 import { MlbService } from '../../services/mlb.service';
 import { NbaService } from '../../services/nba.service';
 import { NcaaFootballService } from '../../services/ncaafb.service';
 import { NcaaMbbService } from '../../services/ncaambb.service';
+import { Game } from '../../services/nba.service';
 
 @Component({
   selector: 'app-who-lost-page',
@@ -16,7 +17,7 @@ import { NcaaMbbService } from '../../services/ncaambb.service';
 export class WhoLostPageComponent implements OnInit {
 
   nflGames: { loser: string; loserLogo: string; opponent: string; opponentLogo: string }[] = [];
-  mlbGames: { loser: string; loserLogo: string; opponent: string; opponentLogo: string }[] = [];
+  mlbGames: { loser: string; loserLogo: string; opponent: string; opponentLogo: string; boxScoreLink: string }[] = [];
   nbaGames: { loser: string; loserLogo: string; opponent: string; opponentLogo: string }[] = [];
   ncaaFbGames: { loser: string; loserLogo: string; opponent: string; opponentLogo: string }[] = [];
   ncaaMbbGames: { loser: string; loserLogo: string; opponent: string; opponentLogo: string }[] = [];
@@ -24,19 +25,18 @@ export class WhoLostPageComponent implements OnInit {
   constructor(private nflService: NflService, private mlbService: MlbService, private nbaService: NbaService, private ncaaFbService: NcaaFootballService, private ncaaMbbService: NcaaMbbService) {}
 
   ngOnInit(): void {
-    const today = new Date();
+    var today = new Date(); 
     const todayString = today.toISOString().split('T')[0]; // Get the date in YYYY-MM-DD format
 
     // Fetch NFL games
     this.nflService.getGames().subscribe(
       (data) => {
         this.nflGames = data.events
-          .filter((event: { date: string; status: { type: { completed: any; }; }; }) => {
-            const gameDate = event.date.split('T')[0]; // Assuming event.date is the date of the game
-            return gameDate === todayString && event.status.type.completed; // Check for completed games
+          .filter((event: { status: { type: { completed: any; }; }; }) => {
+          event.status.type.completed; // Check for completed games
           })
-          .map((event: { competitions: { competitors: Team[]; }[]; }) => {
-            const competitors: Team[] = event.competitions[0]?.competitors;
+          .map((event: { competitions: { competitors: Game[]; }[]; }) => {
+            const competitors: Game[] = event.competitions[0]?.competitors;
 
             if (competitors && competitors.length === 2) {
               const loserTeam = competitors.find(team => team.winner === false);
@@ -51,8 +51,7 @@ export class WhoLostPageComponent implements OnInit {
             }
 
             return null;
-          })
-          .filter((game: null) => game !== null);
+          });
       },
       (error) => {
         console.error('Error fetching NFL games:', error);
@@ -63,17 +62,16 @@ export class WhoLostPageComponent implements OnInit {
     this.mlbService.getGames().subscribe(
       (data) => {
         this.mlbGames = data.events
-          .filter((event: { date: string; status: { type: { completed: any; }; }; }) => {
-            const gameDate = event.date.split('T')[0]; // Assuming event.date is the date of the game
-            return gameDate === todayString && event.status.type.completed; // Check for completed games
+          .filter((event: { status: { type: { completed: any; }; }; links: {href: string, text: string} }) => { 
+            return event.status.type.completed; // Check for completed games
           })
-          .map((event: { competitions: { competitors: Team[]; }[]; }) => {
-            const competitors: Team[] = event.competitions[0]?.competitors;
+          .map((event: { competitions: { competitors: Game[]; }[]; }) => {
+            const competitors: Game[] = event.competitions[0]?.competitors;
 
             if (competitors && competitors.length === 2) {
               const loserTeam = competitors.find(team => team.winner === false);
               const opponentTeam = competitors.find(team => team.winner === true);
-
+              
               return {
                 loser: loserTeam?.team.displayName,
                 opponent: opponentTeam?.team.displayName,
@@ -83,8 +81,7 @@ export class WhoLostPageComponent implements OnInit {
             }
 
             return null;
-          })
-          .filter((game: null) => game !== null);
+          });
       },
       (error) => {
         console.error('Error fetching MLB games:', error);
@@ -94,12 +91,11 @@ export class WhoLostPageComponent implements OnInit {
     this.nbaService.getGames().subscribe(
       (data) => {
         this.nbaGames = data.events
-          .filter((event: { date: string; status: { type: { completed: any; }; }; }) => {
-            const gameDate = event.date.split('T')[0]; // Assuming event.date is the date of the game
-            return gameDate === todayString && event.status.type.completed; // Check for completed games
+          .filter((event: { status: { type: { completed: any; }; }; }) => {
+            return event.status.type.completed;  // Check for completed games
           })
-          .map((event: { competitions: { competitors: Team[]; }[]; }) => {
-            const competitors: Team[] = event.competitions[0]?.competitors;
+          .map((event: { competitions: { competitors: Game[]; }[]; }) => {
+            const competitors: Game[] = event.competitions[0]?.competitors;
 
             if (competitors && competitors.length === 2) {
               const loserTeam = competitors.find(team => team.winner === false);
@@ -112,10 +108,8 @@ export class WhoLostPageComponent implements OnInit {
                 opponentLogo: opponentTeam?.team.logo
               };
             }
-
             return null;
-          })
-          .filter((game: null) => game !== null);
+          });
       },
       (error) => {
         console.error('Error fetching NBA games:', error);
@@ -125,12 +119,12 @@ export class WhoLostPageComponent implements OnInit {
     this.ncaaFbService.getGames().subscribe(
       (data) => {
         this.ncaaFbGames = data.events
-          .filter((event: { date: string; status: { type: { completed: any; }; }; }) => {
-            const gameDate = event.date.split('T')[0]; // Assuming event.date is the date of the game
-            return gameDate === todayString && event.status.type.completed; // Check for completed games
+          .filter((event: { status: { type: { completed: any; }; }; }) => {
+            event.status.type.completed; // Check for completed games
           })
-          .map((event: { competitions: { competitors: Team[]; }[]; }) => {
-            const competitors: Team[] = event.competitions[0]?.competitors;
+          .map((event: { competitions: { competitors: Game[]; }[]; }) => {
+            const competitors: Game[] = event.competitions[0]?.competitors;
+            
 
             if (competitors && competitors.length === 2) {
               const loserTeam = competitors.find(team => team.winner === false);
@@ -146,7 +140,6 @@ export class WhoLostPageComponent implements OnInit {
 
             return null;
           })
-          .filter((game: null) => game !== null);
       },
       (error) => {
         console.error('Error fetching NCAA FB games:', error);
@@ -157,11 +150,10 @@ export class WhoLostPageComponent implements OnInit {
       (data) => {
         this.ncaaMbbGames = data.events
           .filter((event: { date: string; status: { type: { completed: any; }; }; }) => {
-            const gameDate = event.date.split('T')[0]; // Assuming event.date is the date of the game
-            return gameDate === todayString && event.status.type.completed; // Check for completed games
+            return event.status.type.completed; // Check for completed games
           })
-          .map((event: { competitions: { competitors: Team[]; }[]; }) => {
-            const competitors: Team[] = event.competitions[0]?.competitors;
+          .map((event: { competitions: { competitors: Game[]; }[]; }) => {
+            const competitors: Game[] = event.competitions[0]?.competitors;
 
             if (competitors && competitors.length === 2) {
               const loserTeam = competitors.find(team => team.winner === false);
@@ -176,8 +168,7 @@ export class WhoLostPageComponent implements OnInit {
             }
 
             return null;
-          })
-          .filter((game: null) => game !== null);
+          });
       },
       (error) => {
         console.error('Error fetching NCAA MBB games:', error);
